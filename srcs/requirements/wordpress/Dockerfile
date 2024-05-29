@@ -8,8 +8,15 @@ RUN apt-get update -y \
 						php-fpm\
 						php-mysql\
 						mariadb-client\
-    && wget https://fr.wordpress.org/wordpress-6.5.3-fr_FR.tar.gz -P /var/www \
-    && cd /var/www && tar -xzf wordpress-6.5.3-fr_FR.tar.gz && rm wordpress-6.5.3-fr_FR.tar.gz \
-    && chown -R root:root /var/www/wordpress
+    #&& wget https://fr.wordpress.org/wordpress-6.5.3-fr_FR.tar.gz -P /var/www \
+    #&& cd /var/www && tar -xzf wordpress-6.5.3-fr_FR.tar.gz && rm wordpress-6.5.3-fr_FR.tar.gz \
+    #&& chown -R root:root /var/www/wordpress \
+    && wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+    && chmod +x wp-cli.phar \
+    && mv wp-cli.phar /usr/local/bin/wp \
+    && mkdir -p /run/php/php7.3-fpm/
 
 COPY conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+COPY tools/config_wp.sh /tmp/
+
+CMD ["/bin/bash", "tmp/config_wp.sh"]

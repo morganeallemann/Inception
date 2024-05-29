@@ -20,7 +20,6 @@ RUN chmod 755 /var/www/html && chown -R www-data:www-data /var/www/html
 
 # Copy custom Nginx configuration file and HTML content
 COPY conf/nginx.conf /etc/nginx/nginx.conf
-COPY index.html /var/www/html/
 
 # Expose port 443 for HTTPS
 EXPOSE 443

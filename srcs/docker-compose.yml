@@ -4,13 +4,12 @@ services:
   nginx:
     image: nginx
     ports:
-      - "80:80"
       - "443:443"
     volumes:
-      - ./requirements/nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./html:/usr/share/nginx/html
+      - public_data:/var/www/html
     depends_on:
       - mariadb
+      - wordpress
     env_file: .env
 
   mariadb:
@@ -24,5 +23,19 @@ services:
       - db_data:/var/lib/mysql
     env_file: .env
 
+  wordpress:
+    build: ./requirements/wordpress
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - public_data:/var/www/wordpress/wp-content
+    depends_on:
+      - mariadb
+    env_file: .env
+    
+
 volumes:
   db_data:
+  public_data: 
