@@ -19,4 +19,6 @@ RUN apt-get update -y \
 COPY conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
 COPY tools/config_wp.sh /tmp/
 
-CMD ["/bin/bash", "tmp/config_wp.sh"]
+CMD ["/bin/bash", "/tmp/config_wp.sh"]
+
+#ENTRYPOINT [ "/bin/bash" ]

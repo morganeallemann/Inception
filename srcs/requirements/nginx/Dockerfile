@@ -19,10 +19,10 @@ RUN mkdir -p /var/run/nginx
 RUN chmod 755 /var/www/html && chown -R www-data:www-data /var/www/html
 
 # Copy custom Nginx configuration file and HTML content
-COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY ./conf/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 443 for HTTPS
-EXPOSE 443
+EXPOSE 8000
 
 # Start Nginx in the foreground
 ENTRYPOINT ["nginx", "-g", "daemon off;"]

@@ -3,5 +3,4 @@
     bind_address=*
     datadir = /var/lib/mysql
     user = mysql
-    socket = /var/run/mysqld/mysqld.sock
     
