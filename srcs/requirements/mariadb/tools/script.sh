@@ -4,9 +4,17 @@
 #Attribution des droits a MYSQL_USER avec le mdp MYSQL_PASSWORD
 #Changement des droit de root avec le mdp MYSQL_ROOT_PASSWORD 
 
-service mysql start;
-mysql -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
-mysql -e "CREATE USER IF NOT EXISTS \`${MYSQL_USER}\`@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}';"
-mysql -e "GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO \`${MYSQL_USER}\`@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
-mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';"
-mysql -e "FLUSH PRIVILEGES;"
+mkdir -p /run/mysqld
+chown -R mysql:mysql /run/mysqld
+
+chown -R mysql:mysql /var/lib/
+
+echo "Install" 
+mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --rpm > /dev/null
+echo "Database create"
+
+mysqld --user=mysql --bootstrap < /tmp/cmd.txt
+
+echo "END"
+
+exec mysqld --user=mysql --console

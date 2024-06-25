@@ -4,10 +4,10 @@ FROM debian:buster
 RUN apt-get update -y \
     && apt-get upgrade -y \
     && apt-get -y install wget \
-    && apt-get install -y php7.3\
-						php-fpm\
-						php-mysql\
-						mariadb-client\
+    && apt-get install -y php7.3 \
+						php-fpm \
+						php-mysql \
+						mariadb-client \
     #&& wget https://fr.wordpress.org/wordpress-6.5.3-fr_FR.tar.gz -P /var/www \
     #&& cd /var/www && tar -xzf wordpress-6.5.3-fr_FR.tar.gz && rm wordpress-6.5.3-fr_FR.tar.gz \
     #&& chown -R root:root /var/www/wordpress \
@@ -18,6 +18,7 @@ RUN apt-get update -y \
 
 COPY conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
 COPY tools/config_wp.sh /tmp/
+COPY conf/wp-config.php /tmp/
 
 CMD ["/bin/bash", "/tmp/config_wp.sh"]
 

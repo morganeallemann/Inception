@@ -10,11 +10,13 @@ services:
       - wordpress
     env_file: .env
     networks:
-      - network
+      - frontend
 
   mariadb:
     build: ./requirements/mariadb
     container_name: mariadb
+    ports: 
+      - "3307:3307"
     stdin_open: true
     tty: true
     environment:
@@ -26,11 +28,12 @@ services:
       - db_data:/var/lib/mysql
     env_file: .env
     networks:
-      - network
+      - backend
 
   wordpress:
     build: ./requirements/wordpress
     container_name: wordpress
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
@@ -41,7 +44,8 @@ services:
       - mariadb
     env_file: .env
     networks:
-      - network
+      - frontend
+      - backend
     
 
 volumes:
@@ -49,5 +53,5 @@ volumes:
   public_data: 
 
 networks:
-  network:
-    driver: bridge
+  frontend:
+  backend:
