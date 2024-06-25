@@ -15,11 +15,11 @@ RUN apt-get update -y \
     && chmod +x wp-cli.phar \
     && mv wp-cli.phar /usr/local/bin/wp \
     && mkdir -p /run/php/php7.3-fpm/
-
+RUN useradd nginx
 COPY conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
 COPY tools/config_wp.sh /tmp/
 COPY conf/wp-config.php /tmp/
 
-CMD ["/bin/bash", "/tmp/config_wp.sh"]
+ENTRYPOINT ["/bin/bash", "/tmp/config_wp.sh"]
 
 #ENTRYPOINT [ "/bin/bash" ]
