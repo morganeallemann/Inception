@@ -3,7 +3,7 @@ services:
     build: ./requirements/nginx
     container_name: nginx
     ports:
-      - "8000:8000"
+      - "443:443"
     volumes:
       - "~/public_data:/var/www/html"
     depends_on:
@@ -17,7 +17,7 @@ services:
     build: ./requirements/mariadb
     container_name: mariadb
     ports: 
-      - "3307:3307"
+      - "3306:3306"
     stdin_open: true
     restart: unless-stopped
     tty: true

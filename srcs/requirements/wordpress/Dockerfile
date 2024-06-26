@@ -19,6 +19,7 @@ RUN useradd nginx
 COPY conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
 COPY tools/config_wp.sh /tmp/
 COPY conf/wp-config.php /tmp/
+COPY tools/index.html /tmp/
 
 ENTRYPOINT ["/bin/bash", "/tmp/config_wp.sh"]
 
